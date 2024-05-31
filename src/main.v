@@ -1,7 +1,6 @@
 module main
 
 import x.vweb
-import os
 import json
 
 pub struct Link {
@@ -31,8 +30,11 @@ pub fn (app &App) index(mut ctx Context) vweb.Result {
 }
 
 fn main() {
-	file_contants := os.read_file("links.json")!
-	links := json.decode(map[string]string, file_contants)!
+	mut links_file := $embed_file("links.json")
+
+	file_contents := links_file.to_string()
+
+	links := json.decode(map[string]string, file_contents)!
     mut app := &App{
         links,
     }
